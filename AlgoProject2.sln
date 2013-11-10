@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AlgoProject2", "AlgoProject2.vcxproj", "{157E9FCD-F6CE-410A-8B57-4C1000EDFBF9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{157E9FCD-F6CE-410A-8B57-4C1000EDFBF9}.Debug|Win32.ActiveCfg = Debug|Win32
+		{157E9FCD-F6CE-410A-8B57-4C1000EDFBF9}.Debug|Win32.Build.0 = Debug|Win32
+		{157E9FCD-F6CE-410A-8B57-4C1000EDFBF9}.Release|Win32.ActiveCfg = Release|Win32
+		{157E9FCD-F6CE-410A-8B57-4C1000EDFBF9}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
