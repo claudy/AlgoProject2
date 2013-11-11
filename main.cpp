@@ -4,12 +4,24 @@
 //Description:
 //<insert description here>
 
+#include <algorithm>
+using std::pair;
+
+#include <deque>
+using std::deque;
+
+#include <vector>
+using std::vector;
+
 #include <iostream>
 using std::cout;
 using std::endl;
 
 #include <fstream>
 using std::ifstream;
+
+#define edge pair<int,int>//format (w,(u,v))
+                          //(weights, (node,node))
 
 void main()
 {
