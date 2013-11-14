@@ -20,10 +20,14 @@ using std::endl;
 #include <fstream>
 using std::ifstream;
 
+#include "Network.h"
+
 #define edge pair<int,int>//format (w,(u,v))
                           //(weights, (node,node))
 
 void main()
 {
-
+	Graph_AdjacenyListBased g;
+	g.addEdge(3,5,2);
+	
 }
