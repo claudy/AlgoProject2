@@ -34,9 +34,13 @@ void main()
 	g.addVertex(4);
 	g.addVertex(5);
 	g.addEdge(1, 2, 7);
-	g.addEdge(2, 1, 6);
+	g.addEdge(2, 3, 6);
 	g.addEdge(3, 5, 9);
-	g.addEdge(3, 5, 8);
+	g.addEdge(3, 4, 8);
+	g.addEdge(3, 1, 124);
 	cout << "# vertices=" << g.getSizeInVerticies() << "  edges=" << g.getSizeInEdges() << endl << endl;
 	g.printVertexList(cout);
+	cout << "===========" << endl;
+	cout << "MST.printVertexList(cout);" << endl;
+	PrimAlgorithm(g, 1).printVertexList(cout);
 }
