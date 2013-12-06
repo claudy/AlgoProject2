@@ -109,6 +109,11 @@ public:
 		bravo->adjacent.push_back(e);
 	}
 
+	bool hasVertex(int vertexID_) const
+	{
+		return graph.find(vertexID_) == graph.end();
+	}
+
 	int getSizeInVerticies() const
 	{
 		return graph.size();

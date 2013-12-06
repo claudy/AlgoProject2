@@ -2,7 +2,7 @@
 //Intro to Algorithms w/ Dr. Yeager
 //Due 2355 on 09 Dec 2013
 //Description:
-//<insert description here>
+//Driver
 
 #include <algorithm>
 using std::pair;
