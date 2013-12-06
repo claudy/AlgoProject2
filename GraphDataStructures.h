@@ -5,17 +5,28 @@
 //http://stackoverflow.com/questions/19889291/should-i-use-a-graph-library
 //
 //http://www.cplusplus.com/reference/map/map/find/
-
+//
+//http://stackoverflow.com/questions/19955150/applying-dijkstras-algorithm-on-a-graph-of-five-nodes
 
 #pragma once
 
 //Declarations
+#include <limits>
+using std::numeric_limits;
+const int MAX_INT = numeric_limits<int>::max();
+
+#include <ostream>
+using std::ostream;
+using std::endl;
+
 #include <set>
 using std::set;
 
 #include <map>
 using std::map;
 using std::pair;
+
+//#include <queue>?????????????
 
 #include <vector>
 using std::vector;
@@ -26,44 +37,41 @@ struct vertex;
 //Definitions
 struct vertex
 {
-	vertex(const int& id_, vertex* parent_)
+	vertex(const int& id_)
 	{
 		id = id_;
 		visited = 0;
-		parent = parent_;
 	}
 
 	int id;
 	int visited;			//Essentially a Color.
-	vertex* parent;			//Pointer to parent vertex.
 	vector<Edge> adjacent;	//Vertices adjacent
-
 };
 
-struct Edge //(hint: Undirected)
+struct Edge //(hint: Undirected despite wording)
 {
-	Edge(vertex* source, 
-		vertex* destination,
+	Edge(const int& source_, 
+		const int& destination_,
 		const int& weight_)
 	{
-		one = source;
-		two = destination;
+		source = source_;
+		destination = destination_;
 		weight = weight_;
-		visited = 0;
+		traversed = 0;
 	}
-	const vertex* one;
-	const vertex* two;
+	int source;
+	int destination;
 	int weight;
-	int visited;
+	int traversed;
 };
 
 class Graph_AdjacenyListBased
 {
 public:
-	vertex addVertex(const int& a)
+	vertex addVertex(const int& id_)
 	{
-		vertex v(a, nullptr);
-		graph.insert(pair<int, vertex>(a, v)); 
+		vertex v(id_);
+		graph.insert(pair<int, vertex>(id_, v)); 
 		return v;
 	}
 
@@ -95,15 +103,47 @@ public:
 		}
 
 		//Now create the edge between the two verts.
-		Edge e = Edge(alpha, bravo, weight);
+		Edge e = Edge(alpha->id, bravo->id, weight);
 		//And insert it into the adjacency lists of the verts.
 		alpha->adjacent.push_back(e);
 		bravo->adjacent.push_back(e);
 	}
 
-	int getSize() const
+	int getSizeInVerticies() const
 	{
 		return graph.size();
+	}
+
+	int getSizeInEdges() const
+	{
+		return graph.size();
+	}
+
+	ostream& printVertexList(ostream& out) const
+	{
+		bool noneForThisVertex;
+
+		for(auto iter = graph.begin(); iter != graph.end(); iter++)
+		{
+			noneForThisVertex = true;
+
+			out << "Vertex " << iter->second.id << 
+				" (visited=" << iter->second.visited << ")" << endl;
+			for(auto iter2 = iter->second.adjacent.begin(); 
+				iter2 != iter->second.adjacent.end(); iter2++)
+			{
+				out << "  to=" << iter2->destination <<
+					" weight=" << iter2->weight <<
+					" traversed=" << iter2->traversed << endl;
+				noneForThisVertex = false;
+			}
+
+			if(noneForThisVertex)
+				out << "  No edges connected." << endl;
+			out << endl;
+		}
+		out << endl;
+		return out;
 	}
 
 	//Imagine removeVertex(int) and removeEdge(Edge). Note how imagining does not make the functions appear.

@@ -28,6 +28,13 @@ using std::ifstream;
 void main()
 {
 	Graph_AdjacenyListBased g;
-	g.addEdge(3,5,2);
-	
+	g.addVertex(1);
+	g.addVertex(2);
+	g.addVertex(3);
+	g.addVertex(4);
+	g.addVertex(5);
+	g.addEdge(1, 2, 10);
+	g.addEdge(3, 5, 2);
+	cout << "# vertices=" << g.getSizeInVerticies() << "  edges=" << g.getSizeInEdges() << endl << endl;
+	g.printVertexList(cout);
 }
