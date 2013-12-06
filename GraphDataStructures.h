@@ -26,8 +26,6 @@ using std::set;
 using std::map;
 using std::pair;
 
-//#include <queue>?????????????
-
 #include <vector>
 using std::vector;
 
@@ -163,7 +161,7 @@ public:
 	}
 
 	//Imagine removeVertex(int) and removeEdge(Edge). Note how imagining does not make the functions appear.
-
+	friend Graph_AdjacenyListBased PrimAlgorithm(Graph_AdjacenyListBased G, int idOfStartVertex);
 private:
 	map<int, vertex> graph; //ID of vertex, Vertex instance.
 
