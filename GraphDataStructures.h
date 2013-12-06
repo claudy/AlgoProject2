@@ -30,15 +30,22 @@ using std::pair;
 using std::vector;
 
 struct Edge;
-struct vertex;
+struct Vertex;
 
 //Definitions
-struct vertex
+struct Vertex
 {
-	vertex(const int& id_)
+	Vertex(const int& id_)
 	{
 		id = id_;
 		visited = 0;
+	}
+	Vertex(const Vertex& v_)
+	{
+		id = v_.id;
+		visited = v_.visited;
+		adjacent = v_.adjacent; //O(n) deep copy
+								//+ object instantiation time
 	}
 
 	int id;
@@ -66,18 +73,18 @@ struct Edge //(hint: Undirected despite wording)
 class Graph_AdjacenyListBased
 {
 public:
-	vertex addVertex(const int& id_)
+	Vertex addVertex(const int& id_)
 	{
-		vertex v(id_);
-		graph.insert(pair<int, vertex>(id_, v)); 
+		Vertex v(id_);
+		graph.insert(pair<int, Vertex>(id_, v)); 
 		return v;
 	}
 
 	void addEdge(const int& a, const int& b, const int& weight)
 	{
 		//These are used to decrease the # of calls to graph.find()
-		vertex* alpha;
-		vertex* bravo;
+		Vertex* alpha;
+		Vertex* bravo;
 
 		//Assign alpha to the vertex a.
 		if(graph.find(a) == graph.end())
@@ -109,7 +116,7 @@ public:
 
 	bool hasVertex(int vertexID_) const
 	{
-		return graph.find(vertexID_) == graph.end();
+		return graph.find(vertexID_) != graph.end();
 	}
 
 	int getSizeInVerticies() const
@@ -161,8 +168,8 @@ public:
 	}
 
 	//Imagine removeVertex(int) and removeEdge(Edge). Note how imagining does not make the functions appear.
-	friend Graph_AdjacenyListBased PrimAlgorithm(Graph_AdjacenyListBased G, int idOfStartVertex);
+	friend Graph_AdjacenyListBased PrimAlgorithm(Graph_AdjacenyListBased& G, int idOfStartVertex);
 private:
-	map<int, vertex> graph; //ID of vertex, Vertex instance.
+	map<int, Vertex> graph; //ID of vertex, Vertex instance.
 
 };
