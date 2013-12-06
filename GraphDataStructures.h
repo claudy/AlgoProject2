@@ -127,14 +127,25 @@ public:
 		{
 			noneForThisVertex = true;
 
-			out << "Vertex " << iter->second.id << 
+			out << "Vertex " << iter->first << //iter->second.id is identical behavior to iter->first.
 				" (visited=" << iter->second.visited << ")" << endl;
 			for(auto iter2 = iter->second.adjacent.begin(); 
 				iter2 != iter->second.adjacent.end(); iter2++)
 			{
-				out << "  to=" << iter2->destination <<
-					" weight=" << iter2->weight <<
-					" traversed=" << iter2->traversed << endl;
+				if(iter2->destination != iter->first) 
+				{
+					// != so outbound arrow edge
+					out << "  dest=" << iter2->destination <<
+						" weight=" << iter2->weight <<
+						" traversed=" << iter2->traversed << endl;
+				}
+				else 
+				{
+					// == so inbound arrow edge
+					out << "  from=" << iter2->source <<
+						" weight=" << iter2->weight <<
+						" traversed=" << iter2->traversed << endl;
+				}
 				noneForThisVertex = false;
 			}
 

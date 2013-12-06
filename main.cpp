@@ -33,8 +33,10 @@ void main()
 	g.addVertex(3);
 	g.addVertex(4);
 	g.addVertex(5);
-	g.addEdge(1, 2, 10);
-	g.addEdge(3, 5, 2);
+	g.addEdge(1, 2, 7);
+	g.addEdge(2, 1, 6);
+	g.addEdge(3, 5, 9);
+	g.addEdge(3, 5, 8);
 	cout << "# vertices=" << g.getSizeInVerticies() << "  edges=" << g.getSizeInEdges() << endl << endl;
 	g.printVertexList(cout);
 }
