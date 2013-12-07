@@ -48,14 +48,23 @@ void main()
 	system("cls");
 	Graph_AdjacenyListBased h;
 	h.addEdge(1, 2, 4);
+	h.addEdge(2, 1, 4);
 	h.addEdge(1, 3, 2);
+	h.addEdge(3, 1, 2);
 	h.addEdge(1, 5, 3);
+	h.addEdge(5, 1, 3);
 	h.addEdge(3, 5, 6); //maybe switch
+	h.addEdge(5, 3, 6);
 	h.addEdge(3, 6, 3);
+	h.addEdge(6, 3, 3);
 	h.addEdge(3, 4, 1);
+	h.addEdge(4, 3, 1);
 	h.addEdge(2, 4, 5);
+	h.addEdge(4, 2, 5);
 	h.addEdge(4, 6, 6);
+	h.addEdge(6, 4, 6);
 	h.addEdge(5, 6, 2);
+	h.addEdge(6, 5, 2);
 	h.printVertexList(cout);
 	cout << "===========" << endl;
 	cout << "MST.printVertexList(cout);" << endl;
