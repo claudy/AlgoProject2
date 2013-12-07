@@ -23,6 +23,7 @@ Graph_AdjacenyListBased PrimAlgorithm(Graph_AdjacenyListBased& G, int idOfStartV
 	int leastWeightFoundAtThisVertex;
 	int leastWeightFoundDestinationID;
 	int idOfVertexCurrentlyUnderExamination;
+	bool unvisitedVertexFound;
 	queue<int> Q; //A queue of the ids in G that need to be breadth-scanned for the least weight edge.
 
 	//Exceptional case: if the graph input is empty, return empty tree.
@@ -48,7 +49,9 @@ Graph_AdjacenyListBased PrimAlgorithm(Graph_AdjacenyListBased& G, int idOfStartV
 		//Line 2 of the algorithm is done at execution time.
 		leastWeightFoundAtThisVertex = MAX_INT;
 
-		//Look at the adjacency list, cycle through looking for the unleast weight. (Line 8)
+		unvisitedVertexFound = false;
+
+		//Look at the adjacency list, cycle through looking for the unvisited least weight. (Line 8)
 		auto edgeToTest = G.graph.at(idOfVertexCurrentlyUnderExamination).adjacent.begin();
 		while(edgeToTest != G.graph.at(idOfVertexCurrentlyUnderExamination).adjacent.end())
 		{
@@ -64,6 +67,11 @@ Graph_AdjacenyListBased PrimAlgorithm(Graph_AdjacenyListBased& G, int idOfStartV
 				{
 					leastWeightFoundAtThisVertex = edgeToTest->weight;
 					leastWeightFoundDestinationID = edgeToTest->destination;
+					unvisitedVertexFound = true;
+				}
+				if(G.graph.at(edgeToTest->destination).visited == false)
+				{
+					Q.push(edgeToTest->destination);
 				}
 			}
 			edgeToTest++; //Iterate to the next edge
@@ -73,9 +81,9 @@ Graph_AdjacenyListBased PrimAlgorithm(Graph_AdjacenyListBased& G, int idOfStartV
 		{
 			Q.push(leastWeightFoundDestinationID); //Only add the vertex to the Q if it has not been visited.
 			G.graph.at(leastWeightFoundDestinationID).visited = 1;
+			MST.addVertex(leastWeightFoundDestinationID); //Vertex copy ctor?
+			MST.addEdge(idOfVertexCurrentlyUnderExamination, leastWeightFoundDestinationID, leastWeightFoundAtThisVertex); //Edge copy ctor instead?
 		}
-		MST.addVertex(leastWeightFoundDestinationID); //Vertex copy ctor?
-		MST.addEdge(idOfVertexCurrentlyUnderExamination, leastWeightFoundDestinationID, leastWeightFoundAtThisVertex); //Edge copy ctor instead?
 		//NOTE: The edge must be the minimum-weight edge from that vertex. So in,
 		//other words, find the greediest short sighted immediate solution.
 		//Repeat until all vertices have been added into the tree.
