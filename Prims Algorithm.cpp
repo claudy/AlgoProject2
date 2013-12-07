@@ -28,26 +28,27 @@ Graph_AdjacenyListBased PrimAlgorithm(Graph_AdjacenyListBased& G, int idOfStartV
 	//Exceptional case: if the graph input is empty, return empty tree.
 	if(G.getSizeInVerticies() < 1)
 		return MST;
-	//Exceptional case: if the graph input is empty, return empty tree.
+	//Exceptional case: if the start index does not exist, return empty tree.
 	if(!G.hasVertex(idOfStartVertex))
 		return MST;
 
-	//Initialize a tree. done already.
+	//Initialize a tree. done already above.
 	//Set the root of the tree to equal the trunk of ISP network
 	MST.addVertex(idOfStartVertex);
-	Q.push(idOfStartVertex); //Push the first vertex.
+	Q.push(idOfStartVertex); //Push the first vertex. (Line 4 of the algorithm)
+	//TODO: Line 5 of the algorithm ... iterate over the map and push into Q.
 
 	//Start loop
-	while(!Q.empty())
+	while(!Q.empty()) //Line 6 of the algorithm
 	{
-		//Grab the next vertex.
+		//Grab the next vertex. (Line 7)
 		idOfVertexCurrentlyUnderExamination = Q.front();
 		Q.pop();
 
-		//Initialize some stuff
+		//Line 2 of the algorithm is done at execution time.
 		leastWeightFoundAtThisVertex = MAX_INT;
 
-		//Look at the adjacency list, cycle through looking for the unleast weight.
+		//Look at the adjacency list, cycle through looking for the unleast weight. (Line 8)
 		auto edgeToTest = G.graph.at(idOfVertexCurrentlyUnderExamination).adjacent.begin();
 		while(edgeToTest != G.graph.at(idOfVertexCurrentlyUnderExamination).adjacent.end())
 		{
@@ -68,7 +69,7 @@ Graph_AdjacenyListBased PrimAlgorithm(Graph_AdjacenyListBased& G, int idOfStartV
 			edgeToTest++; //Iterate to the next edge
 		}
 		//Grow the tree by one edge from one of the vertices not in the tree yet.
-		if(G.graph.at(leastWeightFoundDestinationID).visited = 0) 
+		if(G.graph.at(leastWeightFoundDestinationID).visited == 0) 
 		{
 			Q.push(leastWeightFoundDestinationID); //Only add the vertex to the Q if it has not been visited.
 			G.graph.at(leastWeightFoundDestinationID).visited = 1;

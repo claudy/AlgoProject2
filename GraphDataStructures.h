@@ -39,6 +39,7 @@ struct Vertex
 	{
 		id = id_;
 		visited = 0;
+
 	}
 	Vertex(const Vertex& v_)
 	{
@@ -51,6 +52,7 @@ struct Vertex
 	int id;
 	int visited;			//Essentially a Color.
 	vector<Edge> adjacent;	//Vertices adjacent
+	int pi;
 };
 
 struct Edge //(hint: Undirected despite wording)
