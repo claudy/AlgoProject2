@@ -38,19 +38,19 @@ struct Vertex
 	Vertex(const int& id_)
 	{
 		id = id_;
-		visited = 0;
+		key = 0;
 
 	}
 	Vertex(const Vertex& v_)
 	{
 		id = v_.id;
-		visited = v_.visited;
+		key = v_.key;
 		adjacent = v_.adjacent; //O(n) deep copy
 								//+ object instantiation time
 	}
 
 	int id;
-	int visited;			//Essentially a Color.
+	int key;			//Essentially a Color.
 	vector<Edge> adjacent;	//Vertices adjacent
 	int pi;
 };
@@ -82,7 +82,7 @@ public:
 		return v;
 	}
 
-	void addEdge(const int& a, const int& b, const int& weight)
+	void addEdge(const int& a, const int& b, const int& weight, const int& traversed_ = 0)
 	{
 		//These are used to decrease the # of calls to graph.find()
 		Vertex* alpha;
@@ -111,6 +111,7 @@ public:
 
 		//Now create the edge between the two verts.
 		Edge e = Edge(alpha->id, bravo->id, weight);
+		e.traversed = traversed_;
 		//And insert it into the adjacency lists of the verts.
 		alpha->adjacent.push_back(e);
 		bravo->adjacent.push_back(e);
@@ -140,7 +141,7 @@ public:
 			noneForThisVertex = true;
 
 			out << "Vertex " << iter->first << //iter->second.id is identical behavior to iter->first.
-				" (visited=" << iter->second.visited << ")" << endl;
+				" (key=" << iter->second.key << ")" << endl;
 			for(auto iter2 = iter->second.adjacent.begin(); 
 				iter2 != iter->second.adjacent.end(); iter2++)
 			{

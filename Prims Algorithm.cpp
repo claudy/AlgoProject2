@@ -9,22 +9,23 @@
 #include <vector>
 using std::vector;
 
-#include <queue>
-using std::queue;
+#include <deque>
+using std::deque;
 
 #include "GraphDataStructures.h"
 
-#include <algorithm> //Maybe need?
+//TODO: #include <algorithm> //Maybe need?
+bool doesItContainThisValue(const deque<int>& deque_, int value_);
 
 //This algorithm EDITS the G's vertex property "traversed"
 Graph_AdjacenyListBased PrimAlgorithm(Graph_AdjacenyListBased& G, int idOfStartVertex)
 {
-	Graph_AdjacenyListBased MST;
+	Graph_AdjacenyListBased MST; //Helps keep track of what has been visited.
 	int leastWeightFoundAtThisVertex;
 	int leastWeightFoundDestinationID;
 	int idOfVertexCurrentlyUnderExamination;
-	bool unvisitedVertexFound;
-	queue<int> Q; //A queue of the ids in G that need to be breadth-scanned for the least weight edge.
+	bool unvisitedVertexFound; //TODO: Remove?
+	deque<int> Q; //A queue of the ids in G that need to be breadth-scanned for the least weight edge.
 
 	//Exceptional case: if the graph input is empty, return empty tree.
 	if(G.getSizeInVerticies() < 1)
@@ -34,22 +35,23 @@ Graph_AdjacenyListBased PrimAlgorithm(Graph_AdjacenyListBased& G, int idOfStartV
 		return MST;
 
 	//Initialize a tree. done already above.
+	//Line 5 of the algorithm ... iterate over the map and push into Q.
+	for(auto iter = G.graph.begin(); iter != G.graph.end(); iter++)
+	{
+		Q.push_back(iter->first);
+		iter->second.key = MAX_INT;
+		iter->second.pi = MAX_INT;
+	}
 	//Set the root of the tree to equal the trunk of ISP network
 	MST.addVertex(idOfStartVertex);
-	Q.push(idOfStartVertex); //Push the first vertex. (Line 4 of the algorithm)
-	//TODO: Line 5 of the algorithm ... iterate over the map and push into Q.
+	G.graph.at(idOfStartVertex).key = 0; //Line 4 of the algorithm
 
 	//Start loop
 	while(!Q.empty()) //Line 6 of the algorithm
 	{
 		//Grab the next vertex. (Line 7)
 		idOfVertexCurrentlyUnderExamination = Q.front();
-		Q.pop();
-
-		//Line 2 of the algorithm is done at execution time.
-		leastWeightFoundAtThisVertex = MAX_INT;
-
-		unvisitedVertexFound = false;
+		Q.pop_front();
 
 		//Look at the adjacency list, cycle through looking for the unvisited least weight. (Line 8)
 		auto edgeToTest = G.graph.at(idOfVertexCurrentlyUnderExamination).adjacent.begin();
@@ -62,32 +64,44 @@ Graph_AdjacenyListBased PrimAlgorithm(Graph_AdjacenyListBased& G, int idOfStartV
 			}
 			else
 			{
-				if(edgeToTest->weight < leastWeightFoundAtThisVertex &&
-					G.graph.at(edgeToTest->destination).visited == false)
+				if(doesItContainThisValue(Q, edgeToTest->destination) &&
+					edgeToTest->weight < G.graph.at(edgeToTest->destination).key) //Line 9
 				{
-					leastWeightFoundAtThisVertex = edgeToTest->weight;
-					leastWeightFoundDestinationID = edgeToTest->destination;
-					unvisitedVertexFound = true;
-				}
-				if(G.graph.at(edgeToTest->destination).visited == false)
-				{
-					Q.push(edgeToTest->destination);
+					//Line 10-11
+					G.graph.at(edgeToTest->destination).key = edgeToTest->weight;
+					G.graph.at(edgeToTest->destination).pi = edgeToTest->source;
+					{
+						Vertex *newV = &(MST.addVertex(edgeToTest->destination));
+						newV->key = edgeToTest->weight;
+						newV->pi = edgeToTest->source;
+					
+						MST.addEdge(edgeToTest->source,
+							edgeToTest->destination,
+							edgeToTest->weight, 
+							1);
+					}
 				}
 			}
 			edgeToTest++; //Iterate to the next edge
 		}
 		//Grow the tree by one edge from one of the vertices not in the tree yet.
-		if(G.graph.at(leastWeightFoundDestinationID).visited == 0) 
-		{
-			Q.push(leastWeightFoundDestinationID); //Only add the vertex to the Q if it has not been visited.
-			G.graph.at(leastWeightFoundDestinationID).visited = 1;
-			MST.addVertex(leastWeightFoundDestinationID); //Vertex copy ctor?
-			MST.addEdge(idOfVertexCurrentlyUnderExamination, leastWeightFoundDestinationID, leastWeightFoundAtThisVertex); //Edge copy ctor instead?
-		}
+			//MST.addVertex(leastWeightFoundDestinationID); //Vertex copy ctor?
+			//MST.addEdge(idOfVertexCurrentlyUnderExamination, leastWeightFoundDestinationID, leastWeightFoundAtThisVertex); //Edge copy ctor instead?
 		//NOTE: The edge must be the minimum-weight edge from that vertex. So in,
 		//other words, find the greediest short sighted immediate solution.
 		//Repeat until all vertices have been added into the tree.
 	}
 	//End Loop
 	return MST;
+}
+
+//Returns true if the value_ is found in the deque_.
+bool doesItContainThisValue(const deque<int>& deque_, int value_)
+{
+	for(deque<int>::const_iterator iter = deque_.begin(); iter != deque_.end(); iter++)
+	{
+		if(*iter == value_)
+			return true;
+	}
+	return false;
 }
