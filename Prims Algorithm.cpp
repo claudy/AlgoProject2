@@ -16,17 +16,13 @@ using std::deque;
 
 #include "GraphDataStructures.h"
 
-//TODO: #include <algorithm> //Maybe need?
 bool doesItContainThisValue(const deque<int>& deque_, int value_);
 
 //This algorithm EDITS the G's vertex properties
 Graph_AdjacenyListBased PrimAlgorithm(Graph_AdjacenyListBased& G, int idOfStartVertex)
 {
 	Graph_AdjacenyListBased MST; //Helps keep track of what has been visited.
-	int leastWeightFoundAtThisVertex;
-	int leastWeightFoundDestinationID;
 	int idOfVertexCurrentlyUnderExamination;
-	bool unvisitedVertexFound; //TODO: Remove?
 	deque<int> Q; //A queue of the ids in G that need to be breadth-scanned for the least weight edge.
 
 	//Exceptional case: if the graph input is empty, return empty tree.
