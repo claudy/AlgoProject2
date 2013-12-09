@@ -3,6 +3,8 @@
 //Due 2355 on 09 Dec 2013
 //Description:
 //Implements the Prim's Algorithm for finding the MST.
+//This algorithm EDITS the G's vertex properties.
+//This algorithm assumes the G is fully connected.
 
 #pragma once
 
@@ -17,7 +19,7 @@ using std::deque;
 //TODO: #include <algorithm> //Maybe need?
 bool doesItContainThisValue(const deque<int>& deque_, int value_);
 
-//This algorithm EDITS the G's vertex property "traversed"
+//This algorithm EDITS the G's vertex properties
 Graph_AdjacenyListBased PrimAlgorithm(Graph_AdjacenyListBased& G, int idOfStartVertex)
 {
 	Graph_AdjacenyListBased MST; //Helps keep track of what has been visited.
@@ -78,7 +80,7 @@ Graph_AdjacenyListBased PrimAlgorithm(Graph_AdjacenyListBased& G, int idOfStartV
 						MST.addEdge(edgeToTest->source,
 							edgeToTest->destination,
 							edgeToTest->weight, 
-							1);
+							1); //Editing this property in G is too complicated right now.
 					}
 				}
 			}
@@ -90,6 +92,11 @@ Graph_AdjacenyListBased PrimAlgorithm(Graph_AdjacenyListBased& G, int idOfStartV
 		//NOTE: The edge must be the minimum-weight edge from that vertex. So in,
 		//other words, find the greediest short sighted immediate solution.
 		//Repeat until all vertices have been added into the tree.
+		if(G.graph.at(idOfVertexCurrentlyUnderExamination).key == MAX_INT)
+		{
+			Q.push_back(idOfVertexCurrentlyUnderExamination); // Send the vertex to the back of the line.
+			// Assumes the graph is fully connected.
+		}
 	}
 	//End Loop
 	return MST;

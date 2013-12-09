@@ -70,6 +70,8 @@ void main()
 	cout << "===========" << endl;
 	cout << "MST.printVertexList(cout);" << endl;
 	PrimAlgorithm(h, 1).printVertexList(cout);
+	cout << "-+-+-+-+-+-+-+-+-" << endl << "h.printVertexList(cout);" << endl;
+	h.printVertexList(cout);
 	/////////////////////
 	system("cls");
 	Graph_AdjacenyListBased m;
@@ -85,6 +87,8 @@ void main()
 	cout << "===========" << endl;
 	cout << "MST.printVertexList(cout);" << endl;
 	PrimAlgorithm(m, 1).printVertexList(cout);
+	cout << "-+-+-+-+-+-+-+-+-" << endl << "m.printVertexList(cout);" << endl;
+	m.printVertexList(cout);
 	//m.printVertexList(cout);
 
 }
