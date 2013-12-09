@@ -141,7 +141,7 @@ public:
 			noneForThisVertex = true;
 
 			out << "Vertex " << iter->first << //iter->second.id is identical behavior to iter->first.
-				" (key=" << iter->second.key << ")" << endl;
+				" (key=" << iter->second.key << "  " << "pi=" << iter->second.pi << ")" << endl;
 			for(auto iter2 = iter->second.adjacent.begin(); 
 				iter2 != iter->second.adjacent.end(); iter2++)
 			{
