@@ -75,11 +75,10 @@ struct Edge //(hint: Undirected despite wording)
 class Graph_AdjacenyListBased
 {
 public:
-	Vertex addVertex(const int& id_)
+	void addVertex(const int& id_)
 	{
 		Vertex v(id_);
 		graph.insert(pair<int, Vertex>(id_, v)); 
-		return v;
 	}
 
 	void addEdge(const int& a, const int& b, const int& weight, const int& traversed_ = 0)
@@ -92,29 +91,30 @@ public:
 		if(graph.find(a) == graph.end())
 		{	
 			// No item 'a' existed in the map. Create it.
-			alpha = &addVertex(a);
+			addVertex(a);
 		}
-		else
-		{
-			alpha = &graph.find(a)->second;
-		}
+		alpha = &graph.find(a)->second; //graph.find(a) returns a pair<int, Vertex> object.
 		//Assign bravo to the vertex b.
 		if(graph.find(b) == graph.end())
 		{	
 			// No item 'b' existed in the map. Create it.
-			bravo = &addVertex(b);
+			addVertex(b);
 		}
-		else
-		{
-			bravo = &graph.find(b)->second;
-		}
-
+		bravo = &graph.find(b)->second; //graph.find(b) returns a pair<int, Vertex> object.
+		
 		//Now create the edge between the two verts.
 		Edge e = Edge(alpha->id, bravo->id, weight);
 		e.traversed = traversed_;
 		//And insert it into the adjacency lists of the verts.
 		alpha->adjacent.push_back(e);
 		bravo->adjacent.push_back(e);
+#if 1 //1 if fully connected graph, 0 if directed graph
+		Edge f = Edge(bravo->id, alpha->id, weight);
+		f.traversed = traversed_;
+		//And insert it into the adjacency lists of the verts.
+		alpha->adjacent.push_back(f);
+		bravo->adjacent.push_back(f);
+#endif
 	}
 
 	bool hasVertex(int vertexID_) const

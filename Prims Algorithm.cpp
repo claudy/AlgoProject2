@@ -44,6 +44,7 @@ Graph_AdjacenyListBased PrimAlgorithm(Graph_AdjacenyListBased& G, int idOfStartV
 	MST.addVertex(idOfStartVertex);
 	G.graph.at(idOfStartVertex).key = 0; //Line 4 of the algorithm
 
+
 	//Start loop
 	while(!Q.empty()) //Line 6 of the algorithm
 	{
@@ -69,7 +70,8 @@ Graph_AdjacenyListBased PrimAlgorithm(Graph_AdjacenyListBased& G, int idOfStartV
 					G.graph.at(edgeToTest->destination).key = edgeToTest->weight;
 					G.graph.at(edgeToTest->destination).pi = edgeToTest->source;
 					{
-						Vertex *newV = &(MST.addVertex(edgeToTest->destination));
+						MST.addVertex(edgeToTest->destination);
+						Vertex *newV = &(MST.graph.find(edgeToTest->destination)->second);
 						newV->key = edgeToTest->weight;
 						newV->pi = edgeToTest->source;
 					

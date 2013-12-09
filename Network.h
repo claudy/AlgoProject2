@@ -14,21 +14,23 @@ public:
 		float costOfAmplifier, 
 		float costOfASingleNode)
 	{
+		//ARGS HANDLING
+
 		//Input network layout graph here. Must be fully connected.
 		//E.g., if you addEdge from 1 to 2, you must addEdge 2 to 1.
 		//because Graph_DataStructure is a directed graph.
-		fibernet.addEdge(1, 2, 20000);
-		fibernet.addEdge(2, 1, 20000);
+		fibernet.addEdge(1, 2, 20005);
+		//fibernet.addEdge(2, 1, 20000);
 		fibernet.addEdge(1, 4, 10000);
-		fibernet.addEdge(4, 1, 10000);
+		//fibernet.addEdge(4, 1, 10000);
 		fibernet.addEdge(2, 4, 20000);
-		fibernet.addEdge(4, 2, 20000);
+		//fibernet.addEdge(4, 2, 20000);
 		fibernet.addEdge(3, 4, 30000);
-		fibernet.addEdge(4, 3, 30000);
+		//fibernet.addEdge(4, 3, 30000);
 		//^Wikipedia example^//
 
 		//Once all the edges have been added, call PrimAlgorithm.
-		PrimAlgorithm(fibernet, 1);
+ 		PrimAlgorithm(fibernet, 1);
 
 	}
 	~Network(){}
@@ -44,6 +46,8 @@ public:
 	ostream& printVertexList(ostream& out) const
 	{
 		fibernet.printVertexList(out);
+		out << endl;
+		//Todo: Figure out the costs. 
 		return out;
 	}
 
