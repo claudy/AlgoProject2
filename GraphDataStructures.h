@@ -152,15 +152,15 @@ public:
 				{
 					// != so outbound arrow edge
 					out << "  dest=" << iter2->destination <<
-						" weight=" << iter2->weight <<
-						" traversed=" << iter2->traversed << endl;
+						" weight=" << iter2->weight << endl;
+						//" traversed=" << iter2->traversed << endl; // NOT USED
 				}
 				else 
 				{
 					// == so inbound arrow edge
 					out << "  from=" << iter2->source <<
-						" weight=" << iter2->weight <<
-						" traversed=" << iter2->traversed << endl;
+						" weight=" << iter2->weight << endl;
+						//" traversed=" << iter2->traversed << endl; // NOT USED
 				}
 				noneForThisVertex = false;
 			}
