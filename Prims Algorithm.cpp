@@ -16,21 +16,23 @@ using std::deque;
 
 #include "GraphDataStructures.h"
 
+//Helper function declarations
 bool doesItContainThisValue(const deque<int>& deque_, int value_);
+int extractMin(deque<int>& deque_, const Graph_AdjacenyListBased& G);
+//end of helper function declarations
 
 //This algorithm EDITS the G's vertex properties
-Graph_AdjacenyListBased PrimAlgorithm(Graph_AdjacenyListBased& G, int idOfStartVertex)
+void PrimAlgorithm(Graph_AdjacenyListBased& G, int idOfStartVertex)
 {
-	Graph_AdjacenyListBased MST; //Helps keep track of what has been visited.
 	int idOfVertexCurrentlyUnderExamination;
 	deque<int> Q; //A queue of the ids in G that need to be breadth-scanned for the least weight edge.
 
 	//Exceptional case: if the graph input is empty, return empty tree.
 	if(G.getSizeInVerticies() < 1)
-		return MST;
+		return;
 	//Exceptional case: if the start index does not exist, return empty tree.
 	if(!G.hasVertex(idOfStartVertex))
-		return MST;
+		return;
 
 	//Initialize a tree. done already above.
 	//Line 5 of the algorithm ... iterate over the map and push into Q.
@@ -41,7 +43,6 @@ Graph_AdjacenyListBased PrimAlgorithm(Graph_AdjacenyListBased& G, int idOfStartV
 		iter->second.pi = MAX_INT;
 	}
 	//Set the root of the tree to equal the trunk of ISP network
-	MST.addVertex(idOfStartVertex);
 	G.graph.at(idOfStartVertex).key = 0; //Line 4 of the algorithm
 
 
@@ -49,8 +50,7 @@ Graph_AdjacenyListBased PrimAlgorithm(Graph_AdjacenyListBased& G, int idOfStartV
 	while(!Q.empty()) //Line 6 of the algorithm
 	{
 		//Grab the next vertex. (Line 7)
-		idOfVertexCurrentlyUnderExamination = Q.front();
-		Q.pop_front();
+		idOfVertexCurrentlyUnderExamination = extractMin(Q, G);
 
 		//Look at the adjacency list, cycle through looking for the unvisited least weight. (Line 8)
 		auto edgeToTest = G.graph.at(idOfVertexCurrentlyUnderExamination).adjacent.begin();
@@ -63,23 +63,12 @@ Graph_AdjacenyListBased PrimAlgorithm(Graph_AdjacenyListBased& G, int idOfStartV
 			}
 			else
 			{
-				if(doesItContainThisValue(Q, edgeToTest->destination) &&
-					edgeToTest->weight < G.graph.at(edgeToTest->destination).key) //Line 9
+				if(doesItContainThisValue(Q, edgeToTest->destination) && //if v is a member of Q
+					edgeToTest->weight < G.graph.at(edgeToTest->destination).key) //if w(u, v) < key(v) (Line 9)
 				{
 					//Line 10-11
 					G.graph.at(edgeToTest->destination).key = edgeToTest->weight;
 					G.graph.at(edgeToTest->destination).pi = edgeToTest->source;
-					{
-						MST.addVertex(edgeToTest->destination);
-						Vertex *newV = &(MST.graph.find(edgeToTest->destination)->second);
-						newV->key = edgeToTest->weight;
-						newV->pi = edgeToTest->source;
-					
-						MST.addEdge(edgeToTest->source,
-							edgeToTest->destination,
-							edgeToTest->weight, 
-							1); //Editing this property in G is too complicated right now.
-					}
 				}
 			}
 			edgeToTest++; //Iterate to the next edge
@@ -97,7 +86,6 @@ Graph_AdjacenyListBased PrimAlgorithm(Graph_AdjacenyListBased& G, int idOfStartV
 		}
 	}
 	//End Loop
-	return MST;
 }
 
 //Returns true if the value_ is found in the deque_.
@@ -109,4 +97,22 @@ bool doesItContainThisValue(const deque<int>& deque_, int value_)
 			return true;
 	}
 	return false;
+}
+
+int extractMin(deque<int>& deque_, const Graph_AdjacenyListBased& G)
+{
+	int vertexID = -1;
+	deque<int>::iterator eraseME;
+	int minKey = INT_MAX;
+	for(deque<int>::iterator iter = deque_.begin(); iter != deque_.end(); iter++)
+	{
+		if(G.graph.at(*iter).key < minKey)
+		{
+			minKey = G.graph.at(*iter).key;
+			vertexID = *iter;
+			eraseME = iter;
+		}
+	}
+	deque_.erase(eraseME);
+	return vertexID;
 }

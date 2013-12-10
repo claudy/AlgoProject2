@@ -11,6 +11,9 @@
 #pragma once
 
 //Declarations
+#include <deque>
+using std::deque;
+
 #include <limits>
 using std::numeric_limits;
 const int MAX_INT = numeric_limits<int>::max();
@@ -171,7 +174,8 @@ public:
 	}
 
 	//Imagine removeVertex(int) and removeEdge(Edge). Note how imagining does not make the functions appear.
-	friend Graph_AdjacenyListBased PrimAlgorithm(Graph_AdjacenyListBased& G, int idOfStartVertex);
+	friend void PrimAlgorithm(Graph_AdjacenyListBased& G, int idOfStartVertex);
+	friend int extractMin(deque<int>& deque_, const Graph_AdjacenyListBased& G);
 private:
 	map<int, Vertex> graph; //ID of vertex, Vertex instance.
 

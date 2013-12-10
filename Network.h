@@ -19,7 +19,7 @@ public:
 		//Input network layout graph here. Must be fully connected.
 		//E.g., if you addEdge from 1 to 2, you must addEdge 2 to 1.
 		//because Graph_DataStructure is a directed graph.
-		fibernet.addEdge(1, 2, 20005);
+		fibernet.addEdge(1, 2, 20000);
 		//fibernet.addEdge(2, 1, 20000);
 		fibernet.addEdge(1, 4, 10000);
 		//fibernet.addEdge(4, 1, 10000);
