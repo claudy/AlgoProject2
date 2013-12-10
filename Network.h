@@ -50,7 +50,13 @@ public:
 		//Todo: Figure out the costs. 
 		return out;
 	}
-
+	ostream& printCostEstimate(ostream& out)
+	{
+		fibernet.printVertexList(out);
+		out << endl;
+		//Todo: Figure out the costs. 
+		return out;
+	}
 private:
 	float cableCostPer100m;
 	float costOfAmplifier; 

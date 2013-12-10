@@ -112,6 +112,7 @@ public:
 		alpha->adjacent.push_back(e);
 		bravo->adjacent.push_back(e);
 #if 1 //1 if fully connected graph, 0 if directed graph
+//Strange out of bounds occurs at lin 55 of Prims alogirhtmm.cpp
 		Edge f = Edge(bravo->id, alpha->id, weight);
 		f.traversed = traversed_;
 		//And insert it into the adjacency lists of the verts.
