@@ -10,11 +10,14 @@ const int DISTANCE_BETWEEN_AMPS = 2000;
 class Network
 {
 public:
-	Network(float cableCostPer100m, 
-		float costOfAmplifier, 
-		float costOfASingleNode)
+	Network(float cableCostPer100m_, 
+		float costOfAmplifier_, 
+		float costOfASingleNode_)
 	{
 		//ARGS HANDLING
+		cableCostPer100m = cableCostPer100m_;
+		costOfAmplifier = costOfAmplifier_;
+		costOfASingleNode = costOfASingleNode_;
 
 		//Input network layout graph here. Must be fully connected.
 		//E.g., if you addEdge from 1 to 2, you must addEdge 2 to 1.
@@ -47,16 +50,9 @@ public:
 	{
 		fibernet.printVertexList(out);
 		out << endl;
-		//Todo: Figure out the costs. 
 		return out;
 	}
-	ostream& printCostEstimate(ostream& out)
-	{
-		fibernet.printVertexList(out);
-		out << endl;
-		//Todo: Figure out the costs. 
-		return out;
-	}
+	ostream& printCostEstimate(ostream& out);
 private:
 	float cableCostPer100m;
 	float costOfAmplifier; 
@@ -65,5 +61,7 @@ private:
 	int numNodes;
 	int numAmplifiers;			//Occurs every 2 km
 	int metersOfCableRoundedUp; //Each edge is rounded up to the nearest 100m.
+	int distanceSum;
+
 	Graph_AdjacenyListBased fibernet; //Weight is in meters.
 };

@@ -177,6 +177,7 @@ public:
 	//Imagine removeVertex(int) and removeEdge(Edge). Note how imagining does not make the functions appear.
 	friend void PrimAlgorithm(Graph_AdjacenyListBased& G, int idOfStartVertex);
 	friend int extractMin(deque<int>& deque_, const Graph_AdjacenyListBased& G);
+	friend class Network;
 private:
 	map<int, Vertex> graph; //ID of vertex, Vertex instance.
 

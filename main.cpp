@@ -85,6 +85,8 @@ void main()
 	//
 	Network network(300, 100, 11111);
 	network.printVertexList(cout);
+	cout << endl;
+	network.printCostEstimate(cout);
 #pragma endregion
 
 }
