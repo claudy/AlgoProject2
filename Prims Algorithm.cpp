@@ -56,10 +56,10 @@ void PrimAlgorithm(Graph_AdjacenyListBased& G, int idOfStartVertex)
 		auto edgeToTest = G.graph.at(idOfVertexCurrentlyUnderExamination).adjacent.begin();
 		while(edgeToTest != G.graph.at(idOfVertexCurrentlyUnderExamination).adjacent.end())
 		{
-			//TODO: Remove this code block if doing undirected graphiness
 			if(edgeToTest->destination == idOfVertexCurrentlyUnderExamination)
 			{
 				//Do nothing?
+				//To optimize by having an undirected graph, put code here.
 			}
 			else
 			{
@@ -73,11 +73,13 @@ void PrimAlgorithm(Graph_AdjacenyListBased& G, int idOfStartVertex)
 			}
 			edgeToTest++; //Iterate to the next edge
 		}
+#pragma region deadcode
 		//Grow the tree by one edge from one of the vertices not in the tree yet.
 			//MST.addVertex(leastWeightFoundDestinationID); //Vertex copy ctor?
 			//MST.addEdge(idOfVertexCurrentlyUnderExamination, leastWeightFoundDestinationID, leastWeightFoundAtThisVertex); //Edge copy ctor instead?
 		//NOTE: The edge must be the minimum-weight edge from that vertex. So in,
 		//other words, find the greediest short sighted immediate solution.
+#pragma endregion
 		//Repeat until all vertices have been added into the tree.
 		if(G.graph.at(idOfVertexCurrentlyUnderExamination).key == MAX_INT)
 		{
