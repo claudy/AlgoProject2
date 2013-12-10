@@ -12,28 +12,41 @@ class Network
 public:
 	Network(float cableCostPer100m_, 
 		float costOfAmplifier_, 
-		float costOfASingleNode_)
+		float costOfASingleNode_,
+		int parentNode = 1)
 	{
 		//ARGS HANDLING
 		cableCostPer100m = cableCostPer100m_;
 		costOfAmplifier = costOfAmplifier_;
 		costOfASingleNode = costOfASingleNode_;
 
-		//Input network layout graph here. Must be fully connected.
+		//INSTRUCTIONS TO USER:
+		//INPUT network layout graph HERE. Must be fully connected.
 		//E.g., if you addEdge from 1 to 2, you must addEdge 2 to 1.
 		//because Graph_DataStructure is a directed graph.
+		/*
 		fibernet.addEdge(1, 2, 20000);
-		//fibernet.addEdge(2, 1, 20000);
 		fibernet.addEdge(1, 4, 10000);
-		//fibernet.addEdge(4, 1, 10000);
 		fibernet.addEdge(2, 4, 20000);
-		//fibernet.addEdge(4, 2, 20000);
 		fibernet.addEdge(3, 4, 30000);
-		//fibernet.addEdge(4, 3, 30000);
+		*/
 		//^Wikipedia example^//
 
+		fibernet.addEdge(1, 2, 1000);
+		fibernet.addEdge(1, 3, 4000);
+		fibernet.addEdge(2, 3, 3000);
+		fibernet.addEdge(1, 5, 10000);
+		fibernet.addEdge(2, 4, 7500);
+		fibernet.addEdge(4, 7, 5000);
+		fibernet.addEdge(3, 4, 6500);
+		fibernet.addEdge(3, 6, 7000);
+		fibernet.addEdge(5, 6, 4500);
+		fibernet.addEdge(3, 5, 3000);
+		fibernet.addEdge(6, 7, 8000);
+		fibernet.addEdge(4, 6, 6000);
+
 		//Once all the edges have been added, call PrimAlgorithm.
- 		PrimAlgorithm(fibernet, 1);
+ 		PrimAlgorithm(fibernet, parentNode); //CHANGE THIS TO 
 
 	}
 	~Network(){}
